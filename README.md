@@ -1,4 +1,4 @@
-# pixelprotocol
+# PiPro
 
 PixelProtocol (pipro) is a protocol for defining what is being sent between the GUI client and the game engine.
 
