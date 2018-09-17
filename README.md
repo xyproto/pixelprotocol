@@ -79,10 +79,10 @@ The commands can be streamed.
 
 ### Flipping
 
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x0d | flip                                          | update all pixels                        |
-| 0x0e | sprite flip                                   | update pixels where sprites have been    |
+| cmd  | uint8 argument                                |                                                |
+|------|-----------------------------------------------|------------------------------------------------|
+| 0x0d | flip                                          | update all pixels                              |
+| 0x0e | sprite flip                                   | update pixels where sprites have been drawn    |
 
 ### Drawing lines
 
