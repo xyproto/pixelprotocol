@@ -20,7 +20,7 @@ It's for implementing games where old-school looking pixel art can be appreciate
 
 # Protocol Definition
 
-* Version: 0.1
+* Version: 0.2
 
 ## Protocol Header
 
@@ -175,6 +175,8 @@ The commands can be streamed.
 | 0x38 | add to x coordinate for drawing the sprite    |                                          |
 | 0x39 | add to y coordinate for drawing the sprite    |                                          |
 | 0x3a | draw sprite                                   | draw the current sprite, 2 for dbl. size |
+| 0x3b | copy                                          | copy to another sprite ID                |
+| 0x3c | rotate                                        | rotate the current sprite, 0..255        |
 
 ### Convolution Filters
 
@@ -190,7 +192,24 @@ The commands can be streamed.
 | 0x47 | set convolution filter 7                      |                                          |
 | 0x48 | set convolution filter 8                      |                                          |
 | 0x49 | set convolution division                      |                                          |
-| 0x4a | use convolution filter                        |                                          |
+| 0x4a | apply convolution filter                      | apply to all pixels                      |
+| 0x4b | apply convolution filter to sprite            | apply to current sprite                  |
+
+### Text
+
+| cmd  | uint8 argument                                |                                          |
+|------|-----------------------------------------------|------------------------------------------|
+| 0x50 | add a byte to the current UTF8 rune           |                                          |
+| 0x51 | clear the current UTF8 rune                   |                                          |
+| 0x52 | fill the current sprite with the current rune | use a "ø" when no glyph is available     |
+
+At a minimum, these glyphs must exist:
+
+    0123456789abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ,._:;"'[]{}()-\/|*#@?!☃
+
+Implementations should supply at least a font that works at 8x8 character size.
+
+The snowman is useful for identifying if the protocol can correctly support at least one non-ASCII character.
 
 ## Keyboard, Joystick and Mouse
 
