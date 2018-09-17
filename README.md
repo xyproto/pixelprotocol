@@ -80,10 +80,10 @@ The commands can be streamed.
 
 ### Flipping
 
-| Cmd    | Name         |  **uint8** argument | Description                                    |
-|--------|--------------|---------------------|------------------------------------------------|
-| `0x0d` | `flip`       |                     | update all pixels                              |
-| `0x0e` | `spriteflip` |                     | update pixels where sprites have been drawn    |
+| Cmd    | Name         |  **uint8** argument | Description                                                                            |
+|--------|--------------|---------------------|----------------------------------------------------------------------------------------|
+| `0x0d` | `flip`       |                     | update all pixels                                                                      |
+| `0x0e` | `spriteflip` |                     | update pixels where sprites have been drawn since last time this command was executed  |
 
 ### Drawing lines
 
