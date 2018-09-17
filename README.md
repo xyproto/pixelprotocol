@@ -124,6 +124,8 @@ The commands can be streamed.
 | 0x1b | choose color for p1                           | prepare to draw a filled triangle        |
 | 0x1c | choose color for p2                           | prepare to draw a filled triangle        |
 
+---
+
 | cmd  | uint8 argument                                |                                          |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x1d | set x coordinate for p0                       | prepare to draw a filled triangle        |
@@ -133,6 +135,8 @@ The commands can be streamed.
 | 0x21 | set x coordinate for p2                       | prepare to draw a filled triangle        |
 | 0x22 | set y coordinate for p2                       | prepare to draw a filled triangle        |
 
+---
+
 | cmd  | uint8 argument                                |                                          |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x23 | add to x coordinate for p0                    | prepare to draw a filled triangle        |
@@ -141,6 +145,8 @@ The commands can be streamed.
 | 0x26 | add to y coordinate for p1                    | prepare to draw a filled triangle        |
 | 0x27 | add to x coordinate for p2                    | prepare to draw a filled triangle        |
 | 0x28 | add to y coordinate for p2                    | prepare to draw a filled triangle        |
+
+---
 
 | cmd  | uint8 argument                                |                                          |
 |------|-----------------------------------------------|------------------------------------------|
@@ -153,6 +159,8 @@ The commands can be streamed.
 | 0x2a | choose a random color for the pixel           |                                          |
 | 0x2b | choose random colors for the line             |                                          |
 | 0x2c | choose random colors for the triangle         |                                          |
+
+---
 
 | cmd  | uint8 argument                                |                                          |
 |------|-----------------------------------------------|------------------------------------------|
@@ -182,11 +190,11 @@ The commands can be streamed.
 
 | cmd  | uint8 argument                                |                                          |
 |------|-----------------------------------------------|------------------------------------------|
-| 0x40 | set convolution filter 0                      | blur is 0,1,0,1,1,1,0,1,0 div 5          |
-| 0x41 | set convolution filter 1                      | flame is 0,1,0,1,1,1,0,0,0 div 4         |
+| 0x40 | set convolution filter 0                      ||
+| 0x41 | set convolution filter 1                      ||
 | 0x42 | set convolution filter 2                      |                                          |
-| 0x43 | set convolution filter 3                      | the uint8 is treated as a range from     |
-| 0x44 | set convolution filter 4                      | 0.0 to 1.0                               |
+| 0x43 | set convolution filter 3                      ||
+| 0x44 | set convolution filter 4                      ||
 | 0x45 | set convolution filter 5                      |                                          |
 | 0x46 | set convolution filter 6                      |                                          |
 | 0x47 | set convolution filter 7                      |                                          |
@@ -194,6 +202,10 @@ The commands can be streamed.
 | 0x49 | set convolution division                      |                                          |
 | 0x4a | apply convolution filter                      | apply to all pixels                      |
 | 0x4b | apply convolution filter to sprite            | apply to current sprite                  |
+
+* blur is 0,1,0,1,1,1,0,1,0 div 5
+* flame is 0,1,0,1,1,1,0,0,0 div 4         
+* the convolution filter parameters 0..255 are treated as if they were floats from 0 to 1
 
 ### Text
 
@@ -219,43 +231,42 @@ Comands that return an uint16:
 
 | cmd  | uint8 argument                                |                                                                       |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
-| 0x60 | is Esc                                        | is Escape being pressed?                                              |
-| 0x61 | is up                                         | is W, up or joystick up pressed? args: 0 for both, 1 for P1, 2 for P2 |
-|      |                                               | Player1 has WASD and Joy1, Player2 has arrows and Joy2                |
-| 0x62 | is left                                       | is A, left or joystick left pressed?                                  |
-| 0x63 | is down                                       | is S, down or joystick down pressed?                                  |
-| 0x64 | is right                                      | is D, right or joystick right pressed?                                |
-| 0x65 | is A                                          | is Return, Comma (,) or joystick A pressed?                           |
-| 0x66 | is B                                          | is Space, Dot (.) or joystick B pressed?                              |
+| 0x60 |                                       | is Escape being pressed?                                              |
+| 0x61 |                                       | is W, up or joystick up pressed? args: 0 for both, 1 for P1, 2 for P2. Player1 has WASD and Joy1, Player2 has arrows and Joy2                |
+| 0x62 |                                       | is A, left or joystick left pressed?                                  |
+| 0x63 |                                       | is S, down or joystick down pressed?                                  |
+| 0x64 |                                       | is D, right or joystick right pressed?                                |
+| 0x65 |                                       | is Return, Comma (,) or joystick A pressed?                           |
+| 0x66 |                                       | is Space, Dot (.) or joystick B pressed?                              |
 
 ---
 
 | cmd  | uint8 argument                                |                                                                       |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
-| 0x67 | is shift held down                            | uint8 argumentument: 0 for left, 1 for right, 2 for any, returns 1 for held down |
-| 0x68 | is alt held down                              |                                                                       |
-| 0x69 | is ctrl held down                             |                                                                       |
-| 0x6a | is super held down                            |                                                                       |
+| 0x67 |  0 for left, 1 for right, 2 for any | returns 1 if Shift is held down |
+| 0x68 |                                        | returns 1 if Alt is held down
+| 0x69 |                                        | returns 1 if Ctrl is held down
+| 0x6a |                                        | returns | if Super is held down
 
 ---
 
 | cmd  | uint8 argument                                |                                                                       |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
-| 0x6b | get keybuffer                                 | returns: 0 if empty, keycode of first in keybuffer if not empty       |
+| 0x6b |                                | returns 0 if keybuffer is empty, keycode of first in keybuffer if not empty       |
 
 ---
 
 | cmd  | uint8 argument                                |                                                                       |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
-| 0x6c | get mouse x coordinate                        |                                                                       |
-| 0x6d | get mouse y coordinate                        |                                                                       |
-| 0x6e | get mouse buttons                             | returns: 0 for none, 1 for left, 2 for right and 3 for middle         |
+| 0x6c |  | get mouse x coordinate                        |                                                                       |
+| 0x6d | | get mouse y coordinate                        |                                                                       |
+| 0x6e |  | get mouse buttons, returns: 0 for none, 1 for left, 2 for right and 3 for middle         |
 
 ---
 
 | cmd  | uint8 argument                                |                                                                       |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
-| 0x6f | joy button                                    | uint8 argumentuments: button ID, returns: 1 for pressed               |
+| 0x6f | joystick button ID                                    | check if joystick button is pressed, returns: 1 for pressed               |
 
 A channel must be set up for receiving the uint16 values that are returned by these functions.
 
