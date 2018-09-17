@@ -171,34 +171,40 @@ The commands can be streamed.
 
 ### Sprites
 
-| Cmd    | Name     | **uint8** argument                            | Description                              |
-|--------|----------|-----------------------------------------------|------------------------------------------|
-| `0x30` | `spid`   | choose sprite ID                              | select a sprite to work with             |
-| `0x31` | `spw`    | set sprite width                              | set sprite width                         |
-| `0x32` | `sph`    | set sprite height                             | set sprite height                        |
-| `0x33` | `spclr`  | clear sprite                                  | clear contents                           |
-| `0x34` | `spush`  | push pixel                                    | adds N pixels of the selected color      |
-| `0x35` | `spnil`  | push empty                                    | add N transparent pixels                 |
-| `0x36` | `spx`    | set x coordinate for drawing the sprite       |                                          |
-| `0x37` | `spy`    | set y coordinate for drawing the sprite       |                                          |
-| `0x38` | `spax`   | add to x coordinate for drawing the sprite    |                                          |
-| `0x39` | `spay`   | add to y coordinate for drawing the sprite    |                                          |
-| `0x3a` | `spdraw` | draw sprite                                   | draw the current sprite, 2 for dbl. size |
-| `0x3b` | `spcopy` | copy                                          | copy to another sprite ID                |
-| `0x3c` | `sprot`  | rotate                                        | rotate the current sprite, 0..255        |
+| Cmd    | Name       | **uint8** argument                                                | Description                                                           |
+|--------|------------|-------------------------------------------------------------------|-----------------------------------------------------------------------|
+| `0x30` | `spid`     | sprite ID                                                         | select a sprite ID to work with                                       |
+| `0x31` | `spw`      | sprite width                                                      | set sprite width                                                      |
+| `0x32` | `sph`      | sprite height                                                     | set sprite height                                                     |
+| `0x33` | `spclr`    | color                                                             | clear contents with the given color                                   |
+| `0x34` | `spush`    | amount of pixels                                                  | add N pixels of the active color                                      |
+| `0x35` | `spt`      | amount of pixels                                                  | add N transparent pixels                                              |
+| `0x36` | `spx`      | x coordinate                                                      | set x coordinate for where to draw the sprite                         |
+| `0x37` | `spy`      | y coordinate                                                      | set y coordinate for where to draw the sprite                         |
+| `0x38` | `spax`     | value from 0..255                                                 | add to x coordinate                                                   |
+| `0x39` | `spay`     | value from 0..255                                                 | add to y coordinate                                                   |
+| `0x3a` | `sprot`    | value from 0..255, used as float from `0..2*PI`                   | rotate the current sprite                                             |
+| `0x3b` | `spscale`  | value from 0..255, used as float from -20..20                     | scale the current sprite                                              |
+| `0x3c` | `spcopy`   | sprite ID                                                         | copy to another sprite ID                                             |
+| `0x3d` | `blit`     | number of sprites to draw                                         | draw n instances of this sprite, following the pixel buffer direction |
+| `0x3e` | `blitinc`  | number of sprites to draw                                         | like `blit`, but increases the sprite ID at every step                |
+
+* The "pixel buffer direction" is from left to right, then starting on the next y coordinate (+ sprite height) when reaching the end of the line.
+* Several sprites can be placed in a row with the `blit` command. They are placed next to each other, without overlapping.
+* For the `blitinc` command, increasing the value from 255 wraps around and sets to current sprite ID to 0.
 
 ### Convolution Filters
 
 | Cmd    | Name     | **uint8** argument                                        | Description                                    |
 |--------|----------|-----------------------------------------------------------|------------------------------------------------|
 | `0x40` | `con0`   | value from 0..255, used as float from -20..20             | set convolution filter value 0                 |
-| `0x40` | `con1`   | value from 0..255, used as float from -20..20             | set convolution filter value 1                 |
-| `0x40` | `con2`   | value from 0..255, used as float from -20..20             | set convolution filter value 2                 |
-| `0x40` | `con3`   | value from 0..255, used as float from -20..20             | set convolution filter value 3                 |
-| `0x40` | `con4`   | value from 0..255, used as float from -20..20             | set convolution filter value 4                 |
-| `0x40` | `con5`   | value from 0..255, used as float from -20..20             | set convolution filter value 5                 |
-| `0x40` | `con6`   | value from 0..255, used as float from -20..20             | set convolution filter value 6                 |
-| `0x40` | `con7`   | value from 0..255, used as float from -20..20             | set convolution filter value 7                 |
+| `0x41` | `con1`   | value from 0..255, used as float from -20..20             | set convolution filter value 1                 |
+| `0x42` | `con2`   | value from 0..255, used as float from -20..20             | set convolution filter value 2                 |
+| `0x43` | `con3`   | value from 0..255, used as float from -20..20             | set convolution filter value 3                 |
+| `0x44` | `con4`   | value from 0..255, used as float from -20..20             | set convolution filter value 4                 |
+| `0x45` | `con5`   | value from 0..255, used as float from -20..20             | set convolution filter value 5                 |
+| `0x46` | `con6`   | value from 0..255, used as float from -20..20             | set convolution filter value 6                 |
+| `0x47` | `con7`   | value from 0..255, used as float from -20..20             | set convolution filter value 7                 |
 | `0x48` | `con8`   | value from 0..255, used as float from -20..20             | set convolution filter value 8                 |
 | `0x49` | `condiv` | convolution division, 0..255, used as float from -20..20  | set convolution division value                 |
 | `0x4a` | `apply`  |                                                           | apply convolution filter to all pixels         |
@@ -248,8 +254,8 @@ Comands that return an `uint16`:
 | `0x66` | `kb`     |                     | is Space, Dot (.) or joystick B pressed?                               |
 
 * P1 means Player 1, P2 means Player 2.
-* Player 1 has WASD keys and/or Joystick 1
-* Player 2 has the arrow keys and Joystick 2
+* Player 1 has WASD keys and/or Joystick 1.
+* Player 2 has the arrow keys and Joystick 2.
 
 ---
 
@@ -280,6 +286,13 @@ Comands that return an `uint16`:
 |--------|--------|--------------------|-------------------------------------------------------------------|
 | `0x6f` | `jbtn` | joystick button ID | check if joystick button is pressed, returns 1 for pressed        |
 
+<!--
+### State
+
+| Cmd    | Name    | **uint8** argument                                                                         | Description                      |
+|--------|---------|--------------------------------------------------------------------------------------------|----------------------------------|
+| `0x70` | `wrapm` | 0 for stopping at the edges, 1 for wrapping around, 2 for following the pixel buffer index | set wrap mode for all operations |
+-->
 
 ### Program Control
 
@@ -298,6 +311,6 @@ Comands that return an `uint16`:
 
 ### General info
 
-* Version: 0.3.0
+* Version: 0.4.0
 * Author: Alexander F. Rødseth
 * [GitHub Project](https://github.com/xyproto/pixelprotocol)
