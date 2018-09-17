@@ -1,6 +1,6 @@
 # PiPro
 
-PixelProtocol (pipro) is a protocol for defining what is being sent between the GUI client and the game engine.
+PixelProtocol (pipro) is a binary protocol for defining what is being sent between the GUI client and the game engine.
 
 It's for implementing games where old-school looking pixel art can be appreciated.
 
