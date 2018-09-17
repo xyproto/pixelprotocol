@@ -87,39 +87,39 @@ The commands can be streamed.
 
 ### Drawing lines
 
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x0f | choose color for start of line                | prepare to draw a line                   |
-| 0x10 | choose color for end of line                  | prepare to draw a line                   |
+| cmd  | name | uint8 argument                          | description                              |
+|------|------|-----------------------------------------|------------------------------------------|
+| 0x0f | lisc | choose color for start of line          | prepare to draw a line                   |
+| 0x10 | liec | choose color for end of line            | prepare to draw a line                   |
 
 ---
 
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x11 | set x coordinate for start of line            | prepare to draw a line                   |
-| 0x12 | set y coordinate for start of line            | prepare to draw a line                   |
-| 0x13 | set x coordinate for end of line              | prepare to draw a line                   |
-| 0x14 | set y coordinate for end of line              | prepare to draw a line                   |
+| cmd  | name | uint8 argument                          | description                              |
+|------|------|-----------------------------------------|------------------------------------------|
+| 0x11 | lisx | x coordinate for start of line          | prepare to draw a line                   |
+| 0x12 | lisy | y coordinate for start of line          | prepare to draw a line                   |
+| 0x13 | liex | x coordinate for end of line            | prepare to draw a line                   |
+| 0x14 | liey | y coordinate for end of line            | prepare to draw a line                   |
 
 ---
 
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x15 | add to x coordinate for start of line         | prepare to draw a line                   |
-| 0x16 | add to y coordinate for start of line         | prepare to draw a line                   |
-| 0x17 | add to x coordinate for end of line           | prepare to draw a line                   |
-| 0x18 | add to y coordinate for end of line           | prepare to draw a line                   |
+| cmd  | name  | uint8 argument                                | description                              |
+|------|-------|-----------------------------------------------|------------------------------------------|
+| 0x15 | liasx | add to x coordinate for start of line         | prepare to draw a line                   |
+| 0x16 | liasy | add to y coordinate for start of line         | prepare to draw a line                   |
+| 0x17 | liaex | add to x coordinate for end of line           | prepare to draw a line                   |
+| 0x18 | liaey | add to y coordinate for end of line           | prepare to draw a line                   |
 
 ---
 
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x19 | draw a line                                   | draw the line                            |
+| cmd  | name  |uint8 argument                         | description                              |
+|------|-------|---------------------------------------|------------------------------------------|
+| 0x19 | ldraw |                                       | draw the line                            |
 
 
 ### Drawing triangles
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x1a | choose color for p0                           | prepare to draw a filled triangle        |
 | 0x1b | choose color for p1                           | prepare to draw a filled triangle        |
@@ -127,7 +127,7 @@ The commands can be streamed.
 
 ---
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x1d | set x coordinate for p0                       | prepare to draw a filled triangle        |
 | 0x1e | set y coordinate for p0                       | prepare to draw a filled triangle        |
@@ -138,7 +138,7 @@ The commands can be streamed.
 
 ---
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x23 | add to x coordinate for p0                    | prepare to draw a filled triangle        |
 | 0x24 | add to y coordinate for p0                    | prepare to draw a filled triangle        |
@@ -149,13 +149,13 @@ The commands can be streamed.
 
 ---
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x29 | draw a filled or empty triangle               | 0 for empty, 1 for filled                |
 
 ### Randomization
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x2a | choose a random color for the pixel           |                                          |
 | 0x2b | choose random colors for the line             |                                          |
@@ -163,7 +163,7 @@ The commands can be streamed.
 
 ---
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x2d | choose random coordinates for the pixel       |                                          |
 | 0x2e | choose random coordinates for the line        |                                          |
@@ -171,7 +171,7 @@ The commands can be streamed.
 
 ### Sprites
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x30 | choose sprite ID                              | select a sprite to work with             |
 | 0x31 | set sprite width                              | set sprite width                         |
@@ -189,7 +189,7 @@ The commands can be streamed.
 
 ### Convolution Filters
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x40 | set convolution filter 0                      ||
 | 0x41 | set convolution filter 1                      ||
@@ -210,7 +210,7 @@ The commands can be streamed.
 
 ### Text
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0x50 | add a byte to the current UTF8 rune           |                                          |
 | 0x51 | clear the current UTF8 rune                   |                                          |
@@ -230,7 +230,7 @@ For returning the state of the client:
 
 Comands that return an uint16:
 
-| cmd  | uint8 argument                                |                                                                       |
+| cmd  | uint8 argument                                | description                                                           |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
 | 0x60 |                                       | is Escape being pressed?                                              |
 | 0x61 |                                       | is W, up or joystick up pressed? args: 0 for both, 1 for P1, 2 for P2. Player1 has WASD and Joy1, Player2 has arrows and Joy2                |
@@ -242,7 +242,7 @@ Comands that return an uint16:
 
 ---
 
-| cmd  | uint8 argument                                |                                                                       |
+| cmd  | uint8 argument                                | description                                                           |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
 | 0x67 |  0 for left, 1 for right, 2 for any | returns 1 if Shift is held down |
 | 0x68 |                                        | returns 1 if Alt is held down
@@ -251,13 +251,13 @@ Comands that return an uint16:
 
 ---
 
-| cmd  | uint8 argument                                |                                                                       |
+| cmd  | uint8 argument                                | description                                                           |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
 | 0x6b |                                | returns 0 if keybuffer is empty, keycode of first in keybuffer if not empty       |
 
 ---
 
-| cmd  | uint8 argument                                |                                                                       |
+| cmd  | uint8 argument                                | description                                                           |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
 | 0x6c |  | get mouse x coordinate                        |                                                                       |
 | 0x6d | | get mouse y coordinate                        |                                                                       |
@@ -265,7 +265,7 @@ Comands that return an uint16:
 
 ---
 
-| cmd  | uint8 argument                                |                                                                       |
+| cmd  | uint8 argument                                | description                                                           |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
 | 0x6f | joystick button ID                                    | check if joystick button is pressed, returns: 1 for pressed               |
 
@@ -273,18 +273,18 @@ A channel must be set up for receiving the uint16 values that are returned by th
 
 ### Program Control
 
-| cmd  | uint8 argument                                |                                          |
+| cmd  | uint8 argument                                | description                              |
 |------|-----------------------------------------------|------------------------------------------|
 | 0xfe | toggle fullscreen                             | enable or disable fullscreen mode        |
 | 0xff | exit                                          | end the program                          |
 
 ### List of client implementations
 
-TBA
+* TBA
 
 ### List of server implementations
 
-TBA
+* TBA
 
 ### General info
 
