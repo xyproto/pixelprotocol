@@ -299,5 +299,5 @@ Comands that return an `uint16`:
 ### General info
 
 * Version: 0.3.0
-* Author: Alexander F. Rødseth &lt;xyproto@archlinux.org&gt;
-* [GitHub project](https://github.com/xyproto/pixelprotocol)
+* Author: Alexander F. Rødseth
+* [GitHub Project](https://github.com/xyproto/pixelprotocol)
