@@ -87,10 +87,10 @@ The commands can be streamed.
 
 ### Drawing lines
 
-| cmd  | name | uint8 argument                          | description                              |
-|------|------|-----------------------------------------|------------------------------------------|
-| 0x0f | lisc | choose color for start of line          | prepare to draw a line                   |
-| 0x10 | liec | choose color for end of line            | prepare to draw a line                   |
+| cmd  | name   | uint8 argument                   | description                              |
+|------|--------|----------------------------------|------------------------------------------|
+| 0x0f | setlcs | color for start of line          | prepare to draw a line                   |
+| 0x10 | setlce | color for end of line            | prepare to draw a line                   |
 
 ---
 
@@ -119,39 +119,39 @@ The commands can be streamed.
 
 ### Drawing triangles
 
-| cmd  | uint8 argument                                | description                              |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x1a | choose color for p0                           | prepare to draw a filled triangle        |
-| 0x1b | choose color for p1                           | prepare to draw a filled triangle        |
-| 0x1c | choose color for p2                           | prepare to draw a filled triangle        |
+| cmd  | name   | uint8 argument                                | description                              |
+|------|--------|-----------------------------------------|------------------------------------------|
+| 0x1a | setcp0 | choose color for p0                           | prepare to draw a filled triangle        |
+| 0x1b | setcp1 | choose color for p1                           | prepare to draw a filled triangle        |
+| 0x1c | setcp2 | choose color for p2                           | prepare to draw a filled triangle        |
 
 ---
 
-| cmd  | uint8 argument                                | description                              |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x1d | set x coordinate for p0                       | prepare to draw a filled triangle        |
-| 0x1e | set y coordinate for p0                       | prepare to draw a filled triangle        |
-| 0x1f | set x coordinate for p1                       | prepare to draw a filled triangle        |
-| 0x20 | set y coordinate for p1                       | prepare to draw a filled triangle        |
-| 0x21 | set x coordinate for p2                       | prepare to draw a filled triangle        |
-| 0x22 | set y coordinate for p2                       | prepare to draw a filled triangle        |
+| cmd  | name   | uint8 argument                   | description                       |
+|------|--------|----------------------------------|-----------------------------------|
+| 0x1d | setxp0 | x coordinate for p0              | prepare to draw a triangle        |
+| 0x1e | setyp0 | y coordinate for p0              | prepare to draw a triangle        |
+| 0x1f | setxp1 | x coordinate for p1              | prepare to draw a triangle        |
+| 0x20 | setyp1 | y coordinate for p1              | prepare to draw a triangle        |
+| 0x21 | setxp2 | x coordinate for p2              | prepare to draw a triangle        |
+| 0x22 | setyp2 | y coordinate for p2              | prepare to draw a triangle        |
 
 ---
 
-| cmd  | uint8 argument                                | description                              |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x23 | add to x coordinate for p0                    | prepare to draw a filled triangle        |
-| 0x24 | add to y coordinate for p0                    | prepare to draw a filled triangle        |
-| 0x25 | add to x coordinate for p1                    | prepare to draw a filled triangle        |
-| 0x26 | add to y coordinate for p1                    | prepare to draw a filled triangle        |
-| 0x27 | add to x coordinate for p2                    | prepare to draw a filled triangle        |
-| 0x28 | add to y coordinate for p2                    | prepare to draw a filled triangle        |
+| cmd  | name   | uint8 argument                   | description                   |
+|------|--------|----------------------------------|-------------------------------|
+| 0x23 | addxp0 | add to x coordinate for p0       | prepare to draw a triangle    |
+| 0x24 | addyp0 | add to y coordinate for p0       | prepare to draw a triangle    |
+| 0x25 | addxp1 | add to x coordinate for p1       | prepare to draw a triangle    |
+| 0x26 | addyp1 | add to y coordinate for p1       | prepare to draw a triangle    |
+| 0x27 | addxp2 | add to x coordinate for p2       | prepare to draw a triangle    |
+| 0x28 | addyp2 | add to y coordinate for p2       | prepare to draw a triangle    |
 
 ---
 
-| cmd  | uint8 argument                                | description                              |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x29 | draw a filled or empty triangle               | 0 for empty, 1 for filled                |
+| cmd  | name  | uint8 argument                        | description                              |
+|------|-------|---------------------------------------|------------------------------------------|
+| 0x29 | tdraw | 0 for empty, 1 for filled             | draw a filled or empty triangle          |
 
 ### Randomization
 
