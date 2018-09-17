@@ -189,22 +189,22 @@ The commands can be streamed.
 
 ### Convolution Filters
 
-| Cmd    | Name     | **uint8** argument                            | Description                                    |
-|--------|----------|-----------------------------------------------|------------------------------------------------|
-| `0x40` | `con0`   | value from 0..255, used as float              | set convolution filter value 0                 |
-| `0x40` | `con1`   | value from 0..255, used as float              | set convolution filter value 1                 |
-| `0x40` | `con2`   | value from 0..255, used as float              | set convolution filter value 2                 |
-| `0x40` | `con3`   | value from 0..255, used as float              | set convolution filter value 3                 |
-| `0x40` | `con4`   | value from 0..255, used as float              | set convolution filter value 4                 |
-| `0x40` | `con5`   | value from 0..255, used as float              | set convolution filter value 5                 |
-| `0x40` | `con6`   | value from 0..255, used as float              | set convolution filter value 6                 |
-| `0x40` | `con7`   | value from 0..255, used as float              | set convolution filter value 7                 |
-| `0x48` | `con8`   | value from 0..255, used as float              | set convolution filter value 8                 |
-| `0x49` | `condiv` | convolution division, 0..255, used as float   | set convolution division value                 |
-| `0x4a` | `apply`  |                                               | apply convolution filter to all pixels         |
-| `0x4b` | `consp`  |                                               | apply convolution filter to the current sprite |
+| Cmd    | Name     | **uint8** argument                                        | Description                                    |
+|--------|----------|-----------------------------------------------------------|------------------------------------------------|
+| `0x40` | `con0`   | value from 0..255, used as float from -20..20             | set convolution filter value 0                 |
+| `0x40` | `con1`   | value from 0..255, used as float from -20..20             | set convolution filter value 1                 |
+| `0x40` | `con2`   | value from 0..255, used as float from -20..20             | set convolution filter value 2                 |
+| `0x40` | `con3`   | value from 0..255, used as float from -20..20             | set convolution filter value 3                 |
+| `0x40` | `con4`   | value from 0..255, used as float from -20..20             | set convolution filter value 4                 |
+| `0x40` | `con5`   | value from 0..255, used as float from -20..20             | set convolution filter value 5                 |
+| `0x40` | `con6`   | value from 0..255, used as float from -20..20             | set convolution filter value 6                 |
+| `0x40` | `con7`   | value from 0..255, used as float from -20..20             | set convolution filter value 7                 |
+| `0x48` | `con8`   | value from 0..255, used as float from -20..20             | set convolution filter value 8                 |
+| `0x49` | `condiv` | convolution division, 0..255, used as float from -20..20  | set convolution division value                 |
+| `0x4a` | `apply`  |                                                           | apply convolution filter to all pixels         |
+| `0x4b` | `consp`  |                                                           | apply convolution filter to the current sprite |
 
-The convolution filter parameters 0..255 are treated as if they were floats between 0 and 1 (inclusive).
+The convolution filter parameters 0..255 are treated as if they were floats between -20 and 20 (inclusive).
 
 Example filters:
 
@@ -298,6 +298,6 @@ Comands that return an `uint16`:
 
 ### General info
 
-* Version: 0.2
+* Version: 0.3
 * Author: Alexander F. Rødseth &lt;xyproto@archlinux.org&gt;
 * [GitHub project](https://github.com/xyproto/pixelprotocol)
