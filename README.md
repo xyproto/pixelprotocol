@@ -9,6 +9,10 @@ It's for implementing games where old-school looking pixel art can be appreciate
 * 256 indexed colors.
 * A size of 320x200 pixels is recommended.
 * Should be possible to implement both in 16-bit assembly for DOS and in a browser.
+* Aiming to be WebSocket-friendly.
+* Pixels are not sent over the network, only commands for drawing them.
+* It should be possible to create a DosBox server for serving games over this protocol.
+* It should be possible to create a mobile client for playing games over this protocol.
 
 ## Q&A
 
@@ -19,8 +23,6 @@ It's for implementing games where old-school looking pixel art can be appreciate
 * A: No, I want something specifically for games or demoscene demos that use 320x200 pixels, 256 colors.
 
 # Protocol Definition
-
-* Version: 0.2
 
 ## Protocol Header
 
@@ -37,23 +39,23 @@ The commands can be streamed.
 
 ### Color palette
 
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x00 | choose palette color                          | prepare for filling the palette          |
-| 0x01 | set red value of chosen palette color         | set the color                            |
-| 0x02 | set green value of chosen palette color       | set the color                            |
-| 0x03 | set blue value of chosen palette color        | set the color                            |
+| cmd  | name         | uint8 argument                          | description                                                    |
+|------|--------------|-----------------------------------------|----------------------------------------------------------------|
+| 0x00 | palsel       | color index, 0..255                     | choose palette color, prepare for filling the palette          |
+| 0x01 | setred       | red value, 0..255                       | set red value of chosen palette color                          |
+| 0x02 | setgreen     | set green value of chosen palette color | set blue value of chosen palette color                         |
+| 0x03 | setblue      | set blue value of chosen palette color  | set green value of chosen palette color                        |
 
 ### Drawing pixels
 
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x04 | choose pixel color                            | prepare for drawing                      |
-| 0x05 | set x position                                |                                          |
-| 0x06 | set y position                                |                                          |
-| 0x07 | add to x position                             |                                          |
-| 0x08 | add to y position                             |                                          |
-| 0x09 | plot                                          | draw a pixel                             |
+| cmd  | name   | uint8 argument                          | description                              |
+|------|--------|-----------------------------------------|------------------------------------------|
+| 0x04 | setcol | pixel color from palette, 0..255        | set the active color                     |
+| 0x05 | setx   | x position, 0..255                      | set active x position                    |
+| 0x06 | sety   | y position, 0..255                      | set active y position                    |
+| 0x07 | addx   | x value, 0..255                         | add value to x position                  |
+| 0x08 | addy   | y value, 0..255                         | add value to y position                  |
+| 0x09 | plot   | n pixels                                | plot one or more pixels from (x,y)       |
 
 ##### Q&A
 
@@ -63,26 +65,20 @@ The commands can be streamed.
 * Q: Isn't that a bit impractical?
 * A: Perhaps, but it makes the protocol very simple and uniform. All commands takes a byte as an argument.
 
-
 ### Filling
 
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x0a | clear                                         | clear everything with the selected color |
-
----
-
-| cmd  | uint8 argument                                |                                          |
-|------|-----------------------------------------------|------------------------------------------|
-| 0x0b | draw linewise until nonblack or end           | for filling the pixel buffer             |
-| 0x0c | draw backwards linewise until nonblack or end | for filling the pixel buffer             |
+| cmd  | name  | uint8 argument                          | description                                                                       |
+|------|-------|-----------------------------------------|-----------------------------------------------------------------------------------|
+| 0x0a | clear | fill color from palette, 0..255         | clear everything with the selected color                                          |
+| 0x0b | rfill | fill color from palette, 0..255         | draw linewise until nonzero color or end, for filling the pixel buffer            |
+| 0x0c | lfill | fill color from palette, 0..255         | draw backwards linewise until nonzero color or end, for filling the pixel buffer  |
 
 ### Flipping
 
-| cmd  | uint8 argument                                |                                                |
-|------|-----------------------------------------------|------------------------------------------------|
-| 0x0d | flip                                          | update all pixels                              |
-| 0x0e | sprite flip                                   | update pixels where sprites have been drawn    |
+| cmd  | name         |  uint8 argument | description                                    |
+|------|--------------|-----------------|------------------------------------------------|
+| 0x0d | flip         |                 | update all pixels                              |
+| 0x0e | spriteflip   |                 | update pixels where sprites have been drawn    |
 
 ### Drawing lines
 
@@ -204,7 +200,7 @@ The commands can be streamed.
 | 0x4b | apply convolution filter to sprite            | apply to current sprite                  |
 
 * blur is 0,1,0,1,1,1,0,1,0 div 5
-* flame is 0,1,0,1,1,1,0,0,0 div 4         
+* flame is 0,1,0,1,1,1,0,0,0 div 4
 * the convolution filter parameters 0..255 are treated as if they were floats from 0 to 1
 
 ### Text
@@ -276,3 +272,16 @@ A channel must be set up for receiving the uint16 values that are returned by th
 |------|-----------------------------------------------|------------------------------------------|
 | 0xfe | toggle fullscreen                             | enable or disable fullscreen mode        |
 | 0xff | exit                                          | end the program                          |
+
+### List of client implementations
+
+TBA
+
+### List of server implementations
+
+TBA
+
+### General info
+
+* [GitHub project](https://github.com/xyproto/pixelprotocol)
+* Version: 0.2
