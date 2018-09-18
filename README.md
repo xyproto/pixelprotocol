@@ -278,6 +278,8 @@ TBD
 
 ### Client Side State
 
+All state values are expected to be zeroed at the start of the program.
+
 | Description                             | Type              |
 |-----------------------------------------|-------------------|
 | r, g, b, a * 256 palette info           | 4 * 256 * uint8   |
@@ -313,6 +315,6 @@ TBD
 
 ### General info
 
-* Version: 2.0.0
+* Version: 2.0.1
 * Author: Alexander F. Rødseth
 * [GitHub Project](https://github.com/xyproto/pixelprotocol)
