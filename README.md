@@ -92,6 +92,8 @@ The commands can be streamed.
 | `0x0d` | `setlcs` | color for start of line          | prepare to draw a line          |
 | `0x0e` | `setlce` | color for end of line            | prepare to draw a line          |
 
+* colors are interpolated linearly, component-wise (r, g, b, a)
+
 ---
 
 | Cmd    | Name   | **uint16** argument                     | Description                    |
@@ -263,6 +265,10 @@ Comands that return an `uint16`:
 | Cmd    | Name   | **uint8** argument | Description                                                       |
 |--------|--------|--------------------|-------------------------------------------------------------------|
 | `0x6f` | `jbtn` | joystick button ID | check if joystick button is pressed, returns 1 for pressed        |
+
+### Audio
+
+TBD
 
 ### Program Control
 
