@@ -271,6 +271,21 @@ Commands that return an `uint16`:
 
 ### Audio
 
+| Cmd    | Name   | **uint8** argument  | Description                                                       |
+|--------|--------|---------------------|-------------------------------------------------------------------|
+| `0x70` | `sels` | sample ID number    | select a sample ID                                                |
+
+---
+
+| Cmd    | Name   | no argument  | Description                                                       |
+|--------|--------|--------------|-------------------------------------------------------------------|
+| `0x71` | `cls`  |              | clear the current sample buffer                                   |
+
+
+| `0x72` | `nois` | f
+
+
+
 TBD
 
 ### Program Control
