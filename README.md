@@ -27,6 +27,9 @@ It's for implementing games where old-school looking pixel art can be appreciate
 **Q**: Can't you just use VNC?<br>
 **A**: No, I want something specifically for games or demoscene demos that use 320x200 pixels, 256 colors.
 
+**Q**: What about audio?<br>
+**A**: It's in the making, but more experiments are needed. Pull requests are welcome!
+
 # Protocol Definition
 
 ## Protocol Header
@@ -219,7 +222,7 @@ For returning the state of the client.
 
 A channel must be set up for receiving the`uint16`values that are returned by these functions.
 
-Comands that return an `uint16`:
+Commands that return an `uint16`:
 
 | Cmd    | Name     |  no argument | Description                                                             |
 |--------|----------|--------------|-------------------------------------------------------------------------|
