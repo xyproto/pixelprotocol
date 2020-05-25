@@ -1,11 +1,11 @@
 <!--
-title: PiPro
+title: PixelProtocol
 favicon: spaceinvaders.ico
 -->
 
-# PiPro
+# PixelProtocol 3
 
-PixelProtocol (pipro) is a binary protocol for defining what is being sent between a GUI client and a game engine.
+PixelProtocol 3 is a simple binary protocol for defining what is being sent between a GUI client and a game engine.
 
 It's for implementing games where old-school looking pixel art can be appreciated.
 
@@ -18,17 +18,7 @@ It's for implementing games where old-school looking pixel art can be appreciate
 * Pixels are not sent over the network, only commands for drawing them.
 * It should be possible to create a DosBox server for serving games over this protocol.
 * It should be possible to create a mobile client for playing games over this protocol.
-
-## Q&A
-
-**Q**: Wouldn't it be cooler if Vulkan commands was sent instead? Or OpenGL? Or SDL2?<br>
-**A**: Protocols for OpenGL over network already exists and I want to keep things really simple.
-
-**Q**: Can't you just use VNC?<br>
-**A**: No, I want something specifically for games or demoscene demos that use 320x200 pixels, 256 colors.
-
-**Q**: What about audio?<br>
-**A**: It's in the making, but more experiments are needed. Pull requests are welcome!
+* The music is extremely simple 4-track MIDI.
 
 # Protocol Definition
 
@@ -269,30 +259,29 @@ Commands that return an `uint16`:
 |--------|--------|--------------------|-------------------------------------------------------------------|
 | `0x6f` | `jbtn` | joystick button ID | check if joystick button is pressed, returns 1 for pressed        |
 
-### Audio
+### Music
 
-| Cmd    | Name   | **uint8** argument  | Description                                                       |
-|--------|--------|---------------------|-------------------------------------------------------------------|
-| `0x70` | `sels` | sample ID number    | select a sample ID                                                |
+| Cmd    | Name       | **uint8** argument  | Description                                              |
+|--------|------------|---------------------|----------------------------------------------------------|
+| `0x70` | `t0prog`   | MIDI program        | select a MIDI program for track 0 (there are 4 tracks)   |
+| `0x71` | `t1prog`   | MIDI program        | select a MIDI program for track 1 (there are 4 tracks)   |
+| `0x72` | `t2prog`   | MIDI program        | select a MIDI program for track 2 (there are 4 tracks)   |
+| `0x73` | `t3prog`   | MIDI program        | select a MIDI program for track 3 (there are 4 tracks)   |
 
----
-
-| Cmd    | Name   | no argument  | Description                                                       |
-|--------|--------|--------------|-------------------------------------------------------------------|
-| `0x71` | `cls`  |              | clear the current sample buffer                                   |
-
-
-| `0x72` | `nois` | f
-
-
-
-TBD
+ 
+| Cmd    | Name         | **uint8** argument  | Description                                                                              |
+|--------|--------------|---------------------|------------------------------------------------------------------------------------------|
+| `0x80` | `t0note`  | MIDI note           | play the MIDI note for track 0 for 20 ms, where note 00 is C3, 01 is D3, 02 is D3 etc (A4 is 432 Hz) |
+| `0x81` | `t1note`  | MIDI note           | play the MIDI note for track 1 for 20 ms, where note 00 is C3, 01 is D3, 02 is D3 etc (A4 is 432 Hz) |
+| `0x82` | `t2note`  | MIDI note           | play the MIDI note for track 1 for 20 ms, where note 00 is C3, 01 is D3, 02 is D3 etc (A4 is 432 Hz) |
+| `0x83` | `t3note`  | MIDI note           | play the MIDI note for track 1 for 20 ms, where note 00 is C3, 01 is D3, 02 is D3 etc (A4 is 432 Hz) |
 
 ### Program Control
 
-| Cmd    | Name     | no argument | Description                 |
-|--------|----------|-------------|-----------------------------|
-| `0xff` | `exit`   |             | end the program, disconnect |
+| Cmd    | Name     | no argument | Description                     |
+|--------|----------|-------------|---------------------------------|
+| `0xff` | `exit`   |             | end the program, disconnect     |
+| `0x90` | `esc`    |             | exit if Escape has been pressed |
 
 ### Client Side State
 
@@ -323,16 +312,8 @@ All state values are expected to be zeroed at the start of the program.
 | sprites                                 | 128 * 128 * uint8 |
 | current sprite ID                       | uint8             |
 
-### List of client implementations
-
-* TBA
-
-### List of server implementations
-
-* TBA
-
 ### General info
 
-* Version: 2.0.1
+* Version: 3.0.0
 * Author: Alexander F. Rødseth
 * [GitHub Project](https://github.com/xyproto/pixelprotocol)
