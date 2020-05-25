@@ -307,8 +307,13 @@ All state values are expected to be zeroed at the start of the program.
 | sprites                                 | 128 * 128 * uint8 |
 | current sprite ID                       | uint8             |
 
+### Implementations
+
+If you implement something using this protocol, please let me know. :)
+
 ### General info
 
 * Version: 3.0.0
 * Author: Alexander F. Rødseth
+* License: CC0
 * [GitHub Project](https://github.com/xyproto/pixelprotocol)
