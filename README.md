@@ -1,8 +1,3 @@
-<!--
-title: PixelProtocol
-favicon: spaceinvaders.ico
--->
-
 # PixelProtocol 3
 
 PixelProtocol 3 is a simple binary protocol for defining what is being sent between a GUI client and a game engine.
