@@ -9,6 +9,11 @@ It's for implementing games where old-school looking pixel art can be appreciate
 * 256 indexed colors.
 * A size of 320x200 pixels is recommended.
 * Should be possible to implement both in 16-bit assembly for DOS and in a browser.
+* 4-channel audio with multiple waveforms and ADSR envelopes.
+* Text rendering with 8 font slots and scaling.
+* Advanced sprite operations including rotation, scaling, and collision detection.
+* Timing control and frame synchronization.
+* Memory management for palettes and screen buffers.
 
 ## Q&A
 
@@ -20,7 +25,7 @@ It's for implementing games where old-school looking pixel art can be appreciate
 
 # Protocol Definition
 
-* Version: 0.1
+* Version: 0.2
 
 ## Protocol Header
 
@@ -196,7 +201,7 @@ The commands can be streamed.
 
 For returning the state of the client:
 
-Comands that return an uint16:
+Commands that return an uint16:
 
 | cmd  | uint8 argument                                |                                                                       |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
@@ -213,7 +218,7 @@ Comands that return an uint16:
 
 | cmd  | uint8 argument                                |                                                                       |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
-| 0x67 | is shift held down                            | uint8 argumentument: 0 for left, 1 for right, 2 for any, returns 1 for held down |
+| 0x67 | is shift held down                            | uint8 argument: 0 for left, 1 for right, 2 for any, returns 1 for held down |
 | 0x68 | is alt held down                              |                                                                       |
 | 0x69 | is ctrl held down                             |                                                                       |
 | 0x6a | is super held down                            |                                                                       |
@@ -236,9 +241,91 @@ Comands that return an uint16:
 
 | cmd  | uint8 argument                                |                                                                       |
 |------|-----------------------------------------------|-----------------------------------------------------------------------|
-| 0x6f | joy button                                    | uint8 argumentuments: button ID, returns: 1 for pressed               |
+| 0x6f | joy button                                    | uint8 argument: button ID, returns: 1 for pressed               |
 
 A channel must be set up for receiving the uint16 values that are returned by these functions.
+
+### Audio
+
+| cmd  | uint8 argument                                |                                          |
+|------|-----------------------------------------------|------------------------------------------|
+| 0x70 | set audio channel                             | select channel 0-3 for audio operations |
+| 0x71 | set frequency                                 | set frequency (0-255, maps to Hz range) |
+| 0x72 | set frequency high byte                       | extend frequency range                   |
+| 0x73 | set volume                                    | set volume (0-255)                       |
+| 0x74 | set waveform                                  | 0=square, 1=triangle, 2=sawtooth, 3=noise |
+| 0x75 | play tone                                     | play tone for N frames                   |
+| 0x76 | stop channel                                  | stop audio on selected channel          |
+| 0x77 | set envelope attack                           | attack time (0-255)                     |
+| 0x78 | set envelope decay                            | decay time (0-255)                      |
+| 0x79 | set envelope sustain                          | sustain level (0-255)                   |
+| 0x7a | set envelope release                          | release time (0-255)                    |
+| 0x7b | play sample                                   | play predefined sample ID               |
+
+### Text Rendering
+
+| cmd  | uint8 argument                                |                                          |
+|------|-----------------------------------------------|------------------------------------------|
+| 0x80 | set font                                      | select font 0-7                         |
+| 0x81 | set text color                                | color for text foreground               |
+| 0x82 | set text background color                     | color for text background (255=transparent) |
+| 0x83 | set text x position                           | x position for text                      |
+| 0x84 | set text y position                           | y position for text                      |
+| 0x85 | add to text x position                        | for positions > 255                     |
+| 0x86 | add to text y position                        | for positions > 255                     |
+| 0x87 | print character                               | print ASCII character                    |
+| 0x88 | print string                                  | print null-terminated string (follows in stream) |
+| 0x89 | set text scale                                | scale factor 1-8                        |
+
+### Geometric Primitives
+
+| cmd  | uint8 argument                                |                                          |
+|------|-----------------------------------------------|------------------------------------------|
+| 0x90 | set circle center x                           | x coordinate for circle center           |
+| 0x91 | set circle center y                           | y coordinate for circle center           |
+| 0x92 | add to circle center x                        | for coordinates > 255                    |
+| 0x93 | add to circle center y                        | for coordinates > 255                    |
+| 0x94 | set circle radius                             | radius in pixels                         |
+| 0x95 | draw circle                                   | 0=outline, 1=filled                     |
+| 0x96 | set rectangle x                               | top-left x coordinate                    |
+| 0x97 | set rectangle y                               | top-left y coordinate                    |
+| 0x98 | add to rectangle x                            | for coordinates > 255                    |
+| 0x99 | add to rectangle y                            | for coordinates > 255                    |
+| 0x9a | set rectangle width                           | width in pixels                          |
+| 0x9b | set rectangle height                          | height in pixels                         |
+| 0x9c | draw rectangle                                | 0=outline, 1=filled                     |
+
+### Timing and Synchronization
+
+| cmd  | uint8 argument                                |                                          |
+|------|-----------------------------------------------|------------------------------------------|
+| 0xa0 | wait frames                                   | wait N frames (60fps assumed)           |
+| 0xa1 | set frame rate                                | set target FPS (0=unlimited)            |
+| 0xa2 | get frame counter                             | returns current frame number (uint16)   |
+| 0xa3 | reset frame counter                           | reset frame counter to 0                |
+| 0xa4 | sync to vblank                                | wait for vertical blank                  |
+
+### Advanced Sprite Operations
+
+| cmd  | uint8 argument                                |                                          |
+|------|-----------------------------------------------|------------------------------------------|
+| 0xb0 | set sprite rotation                           | rotation angle (0-255 = 0-360°)         |
+| 0xb1 | set sprite scale x                            | horizontal scale (128=1.0x)             |
+| 0xb2 | set sprite scale y                            | vertical scale (128=1.0x)               |
+| 0xb3 | set sprite flip                               | 0=none, 1=horizontal, 2=vertical, 3=both |
+| 0xb4 | check sprite collision                        | check if two sprites collide (returns uint16) |
+| 0xb5 | set sprite layer                              | drawing layer/depth (0-255)             |
+| 0xb6 | set sprite alpha                              | transparency (0=transparent, 255=opaque) |
+
+### Memory and Data
+
+| cmd  | uint8 argument                                |                                          |
+|------|-----------------------------------------------|------------------------------------------|
+| 0xc0 | save palette                                  | save current palette to slot N           |
+| 0xc1 | load palette                                  | load palette from slot N                |
+| 0xc2 | save screen                                   | save current screen to buffer N         |
+| 0xc3 | load screen                                   | load screen from buffer N               |
+| 0xc4 | copy region                                   | copy rectangular region (params follow) |
 
 ### Program Control
 
